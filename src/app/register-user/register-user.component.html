@@ -1,0 +1,86 @@
+<section class="row-flex alc jsc" style="height: 100%;">
+    <div class="register-container">
+        <form #registerForm="ngForm" (ngSubmit)="onRegister(registerForm)"
+            class="register-form inner-flex inner-flex-medium">
+            <h2>Register</h2>
+
+            <div class="form-group relative inner-flex inner-flex-small">
+                <label for="name">Name</label>
+                <input type="text" id="name" name="name" [(ngModel)]="registerData.name" #name="ngModel" required
+                    [class.invalid]="name.invalid && (registerForm.submitted || name.touched)" />
+                <div *ngIf="name.invalid && (registerForm.submitted || name.touched)" class="error-message">
+                    <p *ngIf="name.errors?.required">Name is required.</p>
+                </div>
+            </div>
+
+            <div class="form-group relative inner-flex inner-flex-small">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" [(ngModel)]="registerData.email" #email="ngModel" required
+                    email [class.invalid]="email.invalid && (registerForm.submitted || email.touched)" />
+                <div *ngIf="email.invalid && (registerForm.submitted || email.touched)" class="error-message">
+                    <p *ngIf="email.errors?.required">Email is required.</p>
+                    <p *ngIf="email.errors?.email">Please enter a valid email.</p>
+                </div>
+            </div>
+
+            <div class="form-group relative inner-flex inner-flex-small">
+                <label for="phone_no">Phone No.</label>
+                <input type="text" id="phone_no" name="phone_no" [(ngModel)]="registerData.phone_no" #phone_no="ngModel"
+                    required maxlength="10" minlength="10" (keypress)="restrictNonNumeric($event)"
+                    [class.invalid]="phone_no.invalid && (registerForm.submitted ||phone_no.touched)" />
+                <div *ngIf="phone_no.invalid && (registerForm.submitted ||phone_no.touched)" class="error-message">
+                    <p *ngIf="phone_no.errors?.required">Phone number is required.</p>
+                    <p *ngIf="phone_no.errors?.minlength">Phone number must be 10 digits long.</p>
+                </div>
+            </div>
+
+            <!-- Password -->
+            <div class="form-group relative inner-flex inner-flex-small">
+                <label for="password">Password</label>
+                <div class="relative">
+                    <input type="{{showPasswordF ? 'text' : 'password'}}" id="password" name="password"
+                        [(ngModel)]="registerData.password" #password="ngModel" required minlength="6"
+                        [class.invalid]="password.invalid && (registerForm.submitted || password.touched)" />
+                    <div class="eye-div" (click)="togglePasswordVisibility()">
+                        <i class="{{showPasswordF ? 'ri-eye-2-line' : 'ri-eye-close-line'}}"></i>
+                    </div>
+                </div>
+                <div *ngIf="password.invalid && (registerForm.submitted || password.touched)" class="error-message">
+                    <p *ngIf="password.errors?.required">Password is required.</p>
+                    <p *ngIf="password.errors?.minlength">Password must be at least 6 characters long.</p>
+                </div>
+            </div>
+
+            <!-- Confirm Password -->
+            <div class="form-group relative inner-flex inner-flex-small">
+                <label for="confirmPassword">Confirm Password</label>
+                <div class="relative">
+                    <input type="{{showConfirmPasswordF ? 'text' : 'password'}}" id="confirmPassword"
+                        name="confirmPassword" [(ngModel)]="registerData.confirmPassword" #confirmPassword="ngModel"
+                        required
+                        [class.invalid]="confirmPassword.invalid && (registerForm.submitted || confirmPassword.touched)" />
+                    <div class="eye-div" (click)="togglePasswordVisibility('confirm')">
+                        <i class="{{showConfirmPasswordF ? 'ri-eye-2-line' : 'ri-eye-close-line'}}"></i>
+                    </div>
+                </div>
+                <div *ngIf="registerForm.submitted && registerData.password !== registerData.confirmPassword"
+                    class="error-message">
+                    <p>Passwords do not match.</p>
+                </div>
+            </div>
+
+            <!-- <button type="submit" class="btn-submit" [disabled]="isLoading || registerForm.invalid"> -->
+            <!-- {{isLoading ? "Registering..." : "Register"}} -->
+            <button type="submit" class="btn-submit" [disabled]="registerForm.invalid">
+                Register
+            </button>
+        </form>
+
+
+        <!-- Link to Login -->
+        <div class="register-link">
+            <p>Already a user? <a [routerLink]="'/login'" class="link">Login</a></p>
+        </div>
+
+    </div>
+</section>

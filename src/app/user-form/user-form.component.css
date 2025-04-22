@@ -1,0 +1,15 @@
+/* .container{
+    width:25%;
+} */
+ 
+.mb-3{
+    display: flex;
+    flex-direction: column;
+}
+
+.img-preview {
+    max-width: 200px; /* Maximum width of the preview */
+    max-height: 200px; /* Maximum height of the preview */
+    object-fit: contain; /* Ensure the image maintains its aspect ratio */
+    margin-top: 10px;
+  }

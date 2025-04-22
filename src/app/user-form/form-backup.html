@@ -1,0 +1,97 @@
+<div class="container mt-5">
+  <div class="card p-4 shadow">
+    <h2 class="text-center mb-4">User Registration</h2>
+    <form  name="registrationForm" id="registrationForm" (ngSubmit)="submitCareer(registrationForm.form)" #registrationForm="ngForm">
+
+      <!-- Name Field -->
+      <div class="mb-3">
+        <label class="form-label" for="name">Name</label>
+        <input type="text" id="name" [(ngModel)]="useObj.name" #name="ngModel"  class="form-control" required />
+        <div *ngIf="userForm.get('name')?.invalid && userForm.get('name')?.touched" class="text-danger">
+          Name is required (min 3 characters).
+        </div>
+      </div>
+    
+      <!-- Email Field -->
+      <div class="mb-3">
+        <label class="form-label" for="email">Email</label>
+        <input type="email" id="email" formControlName="email" class="form-control" required />
+        <div *ngIf="userForm.get('email')?.invalid && userForm.get('email')?.touched" class="text-danger">
+          Enter a valid email.
+        </div>
+      </div>
+    
+      <!-- Phone Number Field -->
+      <div class="mb-3">
+        <label class="form-label" for="phone_no">Phone Number</label>
+        <input type="tel" id="phone_no" formControlName="phone_no" class="form-control" required
+          (keypress)="restrictNonNumeric($event)" maxlength="10" />
+        <div *ngIf="userForm.get('phone_no')?.invalid && userForm.get('phone_no')?.touched" class="text-danger">
+          Please enter valid number.
+        </div>
+      </div>
+    
+      <!-- Age Field -->
+      <div class="mb-3">
+        <label class="form-label" for="age">Age</label>
+        <input type="number" id="age" formControlName="age" class="form-control" required 
+      
+          (keypress)="restrictAgeInput($event)" maxlength="3"/>
+        <div *ngIf="userForm.get('age')?.invalid && userForm.get('age')?.touched" class="text-danger">
+          Please enter valid age.
+        </div>
+      </div>
+    
+      <!-- Gender Field -->
+      <div class="mb-3">
+        <label class="form-label">Gender</label>
+    
+        <div class="form-check form-check-inline">
+          <!-- Radio button for Male -->
+          <input class="form-check-input" type="radio" formControlName="gender" value="Male" id="male" required />
+          <label class="form-check-label" for="male">Male</label>
+        </div>
+    
+        <div class="form-check form-check-inline">
+          <!-- Radio button for Female -->
+          <input class="form-check-input" type="radio" formControlName="gender" value="Female" id="female" required />
+          <label class="form-check-label" for="female">Female</label>
+        </div>
+    
+        <div *ngIf="userForm.get('gender')?.invalid && userForm.get('gender')?.touched" class="text-danger">
+          Gender is required.
+        </div>
+      </div>
+    
+      <!-- Profile Image Field -->
+      <div class="mb-3">
+        <div>
+          <label class="form-label" for="profile_image">Profile Image</label>
+          <input type="file" id="profile_image" formControlName="profile_image" (change)="onFileChange($event)"
+            class="form-control" required />
+          <div *ngIf="userForm.get('profile_image')?.invalid && userForm.get('profile_image')?.touched"
+            class="text-danger">
+            Profile Image is required.
+          </div>
+    
+          <!-- Image Preview Section -->
+          <div *ngIf="imagePreview" class="mt-3">
+            <h5>Image Preview:</h5>
+            <img [src]="imagePreview" alt="Profile Image Preview" class="img-preview" />
+          </div>
+        </div>
+    
+    
+        <!-- Image Preview -->
+        <div *ngIf="previewImage" class="pt-3">
+          <h5>Image Preview:</h5>
+          <img [src]="previewImage" alt="Profile Image Preview" class="img-fluid mt-2" />
+        </div>
+      </div>
+    
+      <!-- Submit Button -->
+      <button type="submit" class="btn btn-primary w-100" [disabled]="!userForm.valid">Submit</button>
+    </form> 
+  </div>
+</div>
+

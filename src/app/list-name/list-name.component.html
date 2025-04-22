@@ -1,0 +1,77 @@
+<div class="container mt-5">
+    <div class="card p-4 shadow">
+        <h2 class="text-center mb-4">User Data Table</h2>
+
+        <div class="mb-3">
+            <input type="text" class="form-control" placeholder="Search by Name, Email, Phone, Age, or Gender"
+                [(ngModel)]="searchQuery" (input)="getUsers()" autocomplete="off"/>
+        </div>
+
+        <div *ngIf="users_list.length === 0">
+            <p>No user data available.</p>
+        </div>
+
+        <table class="table table-striped" *ngIf="paginatedUsers.length > 0">
+            <thead>
+                <tr>
+                    <th>Sr.no</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone Number</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>Profile Image</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let user of paginatedUsers; let i = index">
+                    <td>{{ (currentPage - 1) * pageSize + (i + 1) }}</td>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.phone_no }}</td>
+                    <td>{{ user.age }}</td>
+                    <td>{{ user.gender }}</td>
+                    <td>
+                        <img [src]="user.profile_image" alt="Profile Image" class="img-thumbnail"
+                            style="width: 60px; height: 60px;"/>
+                    </td>
+                    <td>
+                        <button class="btn btn-warning" (click)="onEdit(user.id)">
+                            <i class="fas fa-pen-to-square"></i>
+                            <!-- Edit -->
+                        </button>
+                        <button (click)="deleteUser(user.id)" class="btn btn-danger" title="Delete" style="margin-left: 20px;">
+                            <i class="fas fa-trash-alt"></i>
+                            <!-- delete -->
+                          </button>
+                    </td>
+                    <!-- <td>
+                        <button (click)="deleteUser(user.id)" class="btn btn-danger" title="Delete">
+                            <i class="fas fa-trash-alt"></i>
+                          </button>
+                    </td> -->
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Pagination Controls -->
+        <div class="d-flex justify-content-center mt-3">
+            <button class="btn btn-primary me-2" (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1">
+                <i class="fas fa-arrow-left"></i>
+            </button>
+
+            <ng-container *ngIf="totalPages > 1">
+                <button *ngFor="let page of pageNumbers" class="btn btn-outline-primary me-2"
+                    [class.active]="page === currentPage" (click)="changePage(page)">
+                    {{ page }}
+                </button>
+            </ng-container>
+
+            <button class="btn btn-primary ms-2" (click)="changePage(currentPage + 1)"
+                [disabled]="currentPage === totalPages">
+                <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+    </div>
+</div>

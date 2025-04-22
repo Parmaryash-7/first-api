@@ -1,0 +1,107 @@
+<div class="container mt-5">
+  <div class="card p-4 shadow-lg">
+    <h2 class="text-center mb-4 text-secondary">User Registration</h2>
+
+    <!-- Form Start -->
+    <form (ngSubmit)="onSubmit()" #userForm="ngForm">
+
+      <!-- Name Field -->
+      <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" id="name" class="form-control" [(ngModel)]="user.name" name="name" required minlength="3"
+          #name="ngModel" />
+
+        <!-- Validation message for name -->
+        <div *ngIf="name.invalid && name.touched" class="text-danger">
+          Name is required and must be at least 3 characters.
+        </div>
+      </div>
+
+      <!-- Email Field -->
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" id="email" class="form-control" [(ngModel)]="user.email" name="email" required />
+        <div *ngIf="user.email && !isEmailValid()" class="text-danger">
+          Enter a valid email address.
+        </div>
+      </div>
+
+      <!-- Age Field -->
+      <div class="mb-3">
+        <label for="age" class="form-label">Age</label>
+        <input type="number" id="age" class="form-control" [(ngModel)]="user.age" name="age" required />
+        <div *ngIf="user.age && !isAgeValid()" class="text-danger">
+          Age must be between 1 and 99.
+        </div>
+      </div>
+
+      <!-- Phone Field -->
+      <div class="mb-3">
+        <label for="phone_no" class="form-label">Phone Number</label>
+        <input type="tel" id="phone_no" class="form-control" [(ngModel)]="user.phone_no" name="phone_no" required
+          (keypress)="restrictNonNumeric($event)" maxlength="10" />
+        <div *ngIf="user.phone_no && !isPhoneValid()" class="text-danger">
+          Please enter a valid 10-digit phone number.
+        </div>
+      </div>
+
+      <!-- Passsword Field -->
+      <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <div class="input-group">
+          <input [type]="isPasswordVisible ? 'text' : 'password'" id="password" class="form-control"
+            [(ngModel)]="user.password" name="password" required (keypress)="restrictSpecialChars($event)"
+            minlength="6" />
+          <button type="button" class="input-group-text" (click)="togglePasswordVisibility()">
+            <i [class]="isPasswordVisible ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+          </button>
+        </div>
+        <div *ngIf="user.password && !isPasswordValid()" class="text-danger">
+          Password must be at least 6 characters long.
+        </div>
+      </div>
+
+      <!-- Gender Field -->
+      <div class="mb-3">
+        <label class="form-label">Gender</label>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" [(ngModel)]="user.gender" name="gender" value="male" id="male"
+            required />
+          <label class="form-check-label" for="male">Male</label>
+        </div>
+        <div class="form-check form-check-inline">
+          <input class="form-check-input" type="radio" [(ngModel)]="user.gender" name="gender" value="female"
+            id="female" required />
+          <label class="form-check-label" for="female">Female</label>
+        </div>
+        <!-- <div *ngIf="!user.gender" class="text-danger">
+                  Gender is required.
+              </div> -->
+      </div>
+
+      <div class="mb-3">
+        <label for="profile_image" class="form-label">Profile Image:</label>
+        <input type="file" id="profile_image" class="form-control" (change)="onImageChange($event)" required />
+
+        <!-- <div *ngIf="!user.profile_image" class="text-danger">
+                  Please select a profile image.
+              </div> -->
+      </div>
+
+      <div *ngIf="user.profile_image?.preview" class="mb-3">
+        <h5>Image Preview:</h5>
+        <img [src]="user.profile_image.preview" alt="User Image" class="img-thumbnail" width="200" />
+      </div>
+      <div *ngIf="!user.profile_image?.preview" class="mb-3">
+        <h5>Image Preview:</h5>
+        <img [src]="user.profile_image" alt="User Image" class="img-thumbnail" width="200" />
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100" [disabled]="!userForm.form.valid || !user.profile_image">
+        Submit
+      </button>
+    </form>
+
+
+  </div>
+</div>
