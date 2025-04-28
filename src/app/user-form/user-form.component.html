@@ -92,10 +92,10 @@
         <h5>Image Preview:</h5>
         <img [src]="user.profile_image.preview" alt="User Image" class="img-thumbnail" width="200" />
       </div>
-      <div *ngIf="!user.profile_image?.preview" class="mb-3">
+<!-- <div *ngIf="!user.profile_image?.preview" class="mb-3">
         <h5>Image Preview:</h5>
         <img [src]="user.profile_image" alt="User Image" class="img-thumbnail" width="200" />
-      </div>
+      </div> -->
 
       <button type="submit" class="btn btn-primary w-100" [disabled]="!userForm.form.valid || !user.profile_image">
         Submit
