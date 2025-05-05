@@ -23,7 +23,7 @@
               </button>
             </div>
             <div *ngIf="loginError" class="alert alert-danger mt-3">{{ loginError }}</div>
-            <button type="submit" class="btn btn-primary btn-block mt-3 w-100">Login</button>
+            <button type="submit" class="btn btn-primary btn-block mt-3 w-100" (click)="error('Login Error')">Login</button>
           </form>
         </div>
       </div>

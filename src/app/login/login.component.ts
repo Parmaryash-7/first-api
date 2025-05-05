@@ -2,6 +2,7 @@ import { AdminService } from "./../admin.service";
 import { Component, OnInit } from "@angular/core";
 
 import { Router } from "@angular/router";
+import { AlertService } from "../alert.service";
 
 @Component({
   selector: "app-login",
@@ -17,12 +18,16 @@ export class LoginComponent implements OnInit {
     email: "",
     password: "",
   };
-  constructor(private adminService: AdminService, private router: Router) {}
+  constructor(private adminService: AdminService, private router: Router ,  private alert :AlertService) {}
 
   ngOnInit() {
     if (this.adminService.isLoggedIn) {
       this.router.navigate(["/list-name"]);
     }
+  }
+
+  error(s: string){
+    this.alert.error(s)
   }
 
   togglePasswordVisibility() {
