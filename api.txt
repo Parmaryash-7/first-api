@@ -1,0 +1,13 @@
+1. environment.ts ma api url
+2. HttpClientModule in app.module.ts
+3. generate api service
+4. generate component
+5. Create Table in Html & necesary css
+6. api.service.ts => private apiUrl = environment.apiUrl
+7. user-list.component.ts => data: any[] = [];
+			constructor(private apiService:Apicervice){}
+			
+			ngOnInit():{
+			 this.apiService..getData().subscribe((resonse)=>{
+			    this.data = response;})
+			}
