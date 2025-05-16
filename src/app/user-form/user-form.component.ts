@@ -71,12 +71,12 @@ export class UserFormComponent implements OnInit {
         //     name: this.user.profile_image.name,
         //   };
 
-        // this.user.profile_image = {
-        // file: null,
-        // preview: this.user.profile_image,
-        // name: this.user.profile_image,
-        // };
-        console.log(this.user);
+        this.user.profile_image = {
+        file: null,
+        preview: this.user.profile_image,
+        name: this.user.profile_image,
+        };
+        console.log(this.user); 
       }
     });
   }
